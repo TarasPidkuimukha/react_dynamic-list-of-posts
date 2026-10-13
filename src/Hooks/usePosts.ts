@@ -10,7 +10,8 @@ export function usePosts(userId: number) {
 
   useEffect(() => {
     if (!userId) {
-      return setPosts([]);
+      setPosts([]);
+      return;
     }
 
     setIsLoading(true);

@@ -43,7 +43,7 @@ export const App = () => {
     setComments(prev => prev.filter(item => item.id !== commentId));
 
     deleteComment(commentId).catch(error => {
-      return error('Fail to delete');
+      return error;
     });
   };
 
