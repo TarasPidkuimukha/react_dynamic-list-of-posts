@@ -48,13 +48,16 @@ export const NewCommentForm: React.FC<NewCommentFormProps> = ({
         };
 
         setIsSending(true);
+        setSendingError('');
         addComment(newComment, postId)
           .then(comment => {
             onAdd(comment);
             setText('');
           })
           .catch(() => setSendingError('Unable to post your comment'))
-          .finally(() => setIsSending(false));
+          .finally(() => {
+            setIsSending(false);
+          });
       }}
     >
       <div className="field" data-cy="NameField">

@@ -27,7 +27,6 @@ export const UserSelector: React.FC<UserSelectorProps> = ({
       }
     };
 
-    // Це тепер всередині useEffect, як і має бути:
     document.addEventListener('mousedown', handleClickOutside);
 
     return () => {

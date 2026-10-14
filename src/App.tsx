@@ -48,12 +48,16 @@ export const App = () => {
 
   const handleCommentDelete = (commentId: number) => {
     const deletedComment = comments.find(comment => comment.id === commentId);
+
     setDeleteError('');
 
     setComments(prev => prev.filter(item => item.id !== commentId));
 
     deleteComment(commentId).catch(() => {
-      if (deletedComment) setComments(prev => [...prev, deletedComment]);
+      if (deletedComment) {
+        setComments(prev => [...prev, deletedComment]);
+      }
+
       setDeleteError('Fail to delete');
     });
   };
