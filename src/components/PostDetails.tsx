@@ -12,6 +12,7 @@ interface PostDetailsProps {
   hasErrorText: string | null;
   handleCommentAdd: (comment: Comment) => void;
   handleCommentDelete: (commentId: number) => void;
+  deleteError: string;
 }
 
 export const PostDetails: React.FC<PostDetailsProps> = ({
@@ -21,6 +22,7 @@ export const PostDetails: React.FC<PostDetailsProps> = ({
   hasErrorText,
   handleCommentAdd,
   handleCommentDelete,
+  deleteError,
 }) => {
   const [isWritingComment, setIsWritingComment] = useState(false);
 
@@ -39,10 +41,8 @@ export const PostDetails: React.FC<PostDetailsProps> = ({
         </div>
       )}
 
-      {!stillLoading && !hasErrorText && comments.length === 0 && (
-        <p className="title is-4" data-cy="NoCommentsMessage">
-          No comments yet
-        </p>
+      {deleteError && (
+        <div className="notification is-danger">{deleteError}</div>
       )}
 
       {!stillLoading && !hasErrorText && comments.length !== 0 && (
@@ -74,6 +74,11 @@ export const PostDetails: React.FC<PostDetailsProps> = ({
             </article>
           ))}
         </div>
+      )}
+      {!stillLoading && !hasErrorText && comments.length === 0 && (
+        <p className="title is-4" data-cy="NoCommentsMessage">
+          No comments yet
+        </p>
       )}
 
       {!stillLoading && !hasErrorText && !isWritingComment && (

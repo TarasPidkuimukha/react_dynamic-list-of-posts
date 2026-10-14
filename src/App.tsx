@@ -23,6 +23,7 @@ export const App = () => {
 
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
+  const [deleteError, setDeleteError] = useState('');
   const { posts, errorText, isLoading } = usePosts(
     selectedUser ? selectedUser.id : 0,
   );
@@ -33,6 +34,12 @@ export const App = () => {
   const handleUserSelect = (user: User) => {
     setSelectedUser(user);
     setSelectedPost(null);
+    setDeleteError('');
+  };
+
+  const handlePostSelect = (post: Post | null) => {
+    setSelectedPost(post);
+    setDeleteError('');
   };
 
   const handleCommentAdd = (comment: Comment) => {
@@ -40,10 +47,14 @@ export const App = () => {
   };
 
   const handleCommentDelete = (commentId: number) => {
+    const deletedComment = comments.find(comment => comment.id === commentId);
+    setDeleteError('');
+
     setComments(prev => prev.filter(item => item.id !== commentId));
 
-    deleteComment(commentId).catch(error => {
-      return error;
+    deleteComment(commentId).catch(() => {
+      if (deletedComment) setComments(prev => [...prev, deletedComment]);
+      setDeleteError('Fail to delete');
     });
   };
 
@@ -93,7 +104,7 @@ export const App = () => {
                   !errorText && (
                     <PostsList
                       selectedPost={selectedPost}
-                      onSelect={setSelectedPost}
+                      onSelect={handlePostSelect}
                       posts={posts}
                     />
                   )}
@@ -121,6 +132,7 @@ export const App = () => {
                   hasErrorText={hasErrorText}
                   handleCommentAdd={handleCommentAdd}
                   handleCommentDelete={handleCommentDelete}
+                  deleteError={deleteError}
                 />
               )}
             </div>

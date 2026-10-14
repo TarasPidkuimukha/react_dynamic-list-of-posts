@@ -11,6 +11,7 @@ export function usePosts(userId: number) {
   useEffect(() => {
     if (!userId) {
       setPosts([]);
+
       return;
     }
 
